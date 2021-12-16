@@ -1,0 +1,69 @@
+---
+layout: post
+title: Lets look at cost optimization for EKS
+date: 
+type: post
+parent_id: '0'
+published: false
+password: ''
+status: draft
+categories: []
+tags: []
+meta:
+  _last_editor_used_jetpack: block-editor
+author:
+  login: tanmaybhat24
+  email: tanmaybhat24@gmail.com
+  display_name: Tanmay Bhat
+  first_name: Tanmay
+  last_name: Bhat
+permalink: "/"
+---
+<p><!-- wp:paragraph --></p>
+<p>So you Might be running multiple clusters in AWS and after a certain time cost does become a big thing to handle and mainly keeping it under the limit is a big challenge and in this article, we'll see some of the ways in which we can save cost in AWS.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3 id="1-ebs-volumes">1. EBS volumes</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>To be honest, It's one of the most under-valued part of EKS cost optimization. I've never seen anyone talking about it in general. Let's see more details about it.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Whenever you create a node group ( managed) in EKS, AWS creates an EC2 machine ( worker nodes) with X amount of EBS volume size with type: <strong>GP2</strong> (default) . What most people don't know is that there's a newer generation of volume type called <strong>GP3</strong>. The Adtantage of GP2 over GP2 is its ~20% cheaper and the IOPS of the volume can be changed according to the requirement which cannot be possible with GP2. So you get savings plus adjustable performance tunings.</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>If you're using EBS as storage medium for Persistane Volumees in Kubernetes (mos widely used) you should revist the volume type mentioned in your <strong>Storage Class</strong>. The GP3 support is fairly new ( supports v.1.18 &amp; newer) and you should use that instead of old GP2 so that any new PV created by Kubernetes will be GP3, hence your savings.</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:heading {"level":3} --></p>
+<h3 id="2-cluster-autoscaler-ca">2. Cluster Autoscaler ( CA)</h3>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:paragraph --></p>
+<p>CA is one of the most widely used recommendations for cost optimization. Now What's CA, how to install it and use it is mentioned in detail in my previous post (<a href="https://krakentips.wordpress.com/2021/11/13/a-closer-look-at-cluster-autoscaler-for-eks/">Link</a>).</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>It's very necessary that you tune the cluster auto-scaler according to your environment flags/parameters such as cool-down period, node not-ready period, etc. </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Once that's done, according to your scaling strategy, you should use the appropriate values for <strong>Min size</strong> and <strong>Max size</strong> in node groups. Keep in mind that if you give an unnecessary larger value for min node group size, CA won't scale down as it's dependant on the min size of the node group.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>You should combine <strong>HPA</strong> ( horizontal pod autoscaling) with CA. HPA can be set to either memory threshold-based autoscaling or CPU-based scaling.  </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>So, the scenario will be like your App receives high traffic, CPU/Memory fo the existing pod goes up, hits the defined limit, HPA senses that through metrics server, increases replica of the deployment to server the demand and if the pods cant be scheduled with available resources, asks CA to spin up more ec2 instances and scheduled pod there. Once the traffic decreases, scale down the pods &amp; nodes automatically.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>3. right-sizing instances</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>4. spot instances</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>5. correctly difinhg limit and request</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>

@@ -1,0 +1,99 @@
+---
+layout: post
+title: How to SSH into docker in PWD (Play With Docker)
+date: 2021-01-22 10:28:28.000000000 +00:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- docker
+- how to
+tags:
+- pwd
+- ssh pwd
+meta:
+  _last_editor_used_jetpack: block-editor
+  _thumbnail_id: '66'
+  _wpas_done_25816526: '1'
+  publicize_linkedin_url: ''
+  _publicize_job_id: '53751668766'
+  timeline_notification: '1611291510'
+  _publicize_done_external: a:1:{s:7:"twitter";a:1:{i:25816526;s:59:"https://twitter.com/Tanmaybhat98/status/1352480738806030336";}}
+  _publicize_done_23503769: '1'
+  publicize_twitter_user: Tanmaybhat98
+  _publicize_done_23503770: '1'
+  _wpas_done_25816528: '1'
+author:
+  login: tanmaybhat24
+  email: tanmaybhat24@gmail.com
+  display_name: Tanmay Bhat
+  first_name: Tanmay
+  last_name: Bhat
+permalink: "/2021/01/22/how-to-ssh-into-docker-in-pwd-play-with-docker/"
+---
+<p><!-- wp:image {"align":"center","id":66,"sizeSlug":"large","linkDestination":"none"} --></p>
+<div class="wp-block-image">
+<figure class="aligncenter size-large"><img src="{{ site.baseurl }}/assets/2021/01/whale20logo332_5.png?w=269" alt="" class="wp-image-66" /></figure>
+</div>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>Hey all ! For those of you who don't  know what PWD is below is short explanation :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>So, PWD stands for Play With Docker. You can deploy &amp; learn docker at free with time limit of each instance up-to 10 Hrs!</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>For more info, go to :<a href="https://labs.play-with-docker.com/">https://labs.play-with-docker.com/</a></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>There are two ways you can access the docker instance.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true} --></p>
+<ol>
+<li>Use the web based console.</li>
+<li>SSH into that instance.</li>
+</ol>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>I always love to do ssh as it gives me more freedom.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>If you go straight away and do ssh from your terminal, you will get :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:verse --></p>
+<pre class="wp-block-verse">lab-suse:~/.ssh # ssh ip-x-x-x-@direct.labs.play-with-docker.com
+ip-x-x-x-@direct.labs.play-with-docker.com: Permission denied (publickey).</pre>
+<p><!-- /wp:verse --></p>
+<p><!-- wp:paragraph --></p>
+<p>Why are we getting this ? because there is no fresh key generated in your host.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Lets create a fresh key, run the below command :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:preformatted --></p>
+<pre id="block-f6743d5e-a71a-4af4-8b17-1637e21f28f9" class="wp-block-preformatted">lab-suse:~/.ssh# <code>ssh-keygen</code></pre>
+<p><!-- /wp:preformatted --></p>
+<p><!-- wp:paragraph --></p>
+<p>After you complete the above command, try ssh again, it should work: </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:preformatted --></p>
+<pre id="block-c1e67349-a5d7-4862-842b-58f3a507caf0" class="wp-block-preformatted">lab-suse:~/.ssh# ssh ip-x-x-x-@direct.labs.play-with-docker.com
+ The authenticity of host 'direct.labs.play-with-docker.com (40.76.55.146)' can't be established.
+ RSA key fingerprint is SHA256:UyqFRi42lglohSOPKn6Hh9M83Y5Ic9IQn1PTHYqOjEA.
+ Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+ Warning: Permanently added 'direct.labs.play-with-docker.com,40.76.55.146' (RSA) to the list of known hosts.
+ Connecting to Ip-x-x-x:8022
+
+#########################################################                                                         #                          WARNING!!!!                        #                                                         # This is a sandbox environment. Using personal credentials   #                                                         # is HIGHLY! discouraged. Any consequences of doing so are    #                                                         # completely the user's responsibilites.                      #                                                         #                                                             #                                                         # The PWD team.                                               #                                                         ###############################################################                                                         <a href="local">node1</a> root@192.168.0.28 ~</pre>
+<p><!-- /wp:preformatted --></p>
+<p><!-- wp:paragraph --></p>
+<p>Note : if you are using any ssh applications, save that key you generated to a file and load that file in authentication section. </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator" />
+<!-- /wp:separator --></p>
+<p><!-- wp:paragraph --></p>
+<p>This was a quick how-to and see you in the next one !</p>
+<p><!-- /wp:paragraph --></p>

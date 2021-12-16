@@ -1,0 +1,71 @@
+---
+layout: post
+title: Understanding cron jobs in Kubernetes
+date: 
+type: post
+parent_id: '0'
+published: false
+password: ''
+status: draft
+categories: []
+tags: []
+meta:
+  _last_editor_used_jetpack: block-editor
+author:
+  login: tanmaybhat24
+  email: tanmaybhat24@gmail.com
+  display_name: Tanmay Bhat
+  first_name: Tanmay
+  last_name: Bhat
+permalink: "/"
+---
+<p><!-- wp:paragraph --></p>
+<p>Hey all, In this article, lets dig deeper on cron jobs of Kubernetes i.e how to configure them, debugging failed schedules and much more !</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator" />
+<!-- /wp:separator --></p>
+<p><!-- wp:paragraph --></p>
+<p> Lets start from beginning, <em>what's a cron job  in Kubernetes ?</em></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>A&nbsp;<em>CronJob</em>&nbsp;creates&nbsp;<a href="https://kubernetes.io/docs/concepts/workloads/controllers/job/" target="_blank" rel="noreferrer noopener">Jobs</a>&nbsp;on a repeating schedule.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>One CronJob object is like one line of a <em>crontab</em> (cron table) file. It runs a job periodically on a given schedule, written in <a href="https://en.wikipedia.org/wiki/Cron">Cron</a> format. </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><em>What can be done from cronjob ?</em></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>CronJobs are meant for performing regular scheduled actions such as backups, report generation, and so on. Each of those tasks should be configured to recur indefinitely (for example: once a day / week / month); you can define the point in time within that interval when the job should start.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>In our company, we use to do custom analytics and report generation. Lot can be done via cronjobs, you just have to properly structure it, that's it.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Key components in a cronjob lifecycle :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Cronjob</li>
+<li>Job</li>
+<li>replication controller.</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator" />
+<!-- /wp:separator --></p>
+<p><!-- wp:paragraph --></p>
+<p> I stole lot of definitions and info from official docs !, kudos to k8s team and the  person who wrote it !</p>
+<p><!-- /wp:paragraph --></p>

@@ -1,0 +1,195 @@
+---
+layout: post
+title: Hosting the Chartmuseum in Digital Ocean Spaces
+date: 2021-12-12 21:26:48.000000000 +00:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags:
+- aws s3
+- chartmuseum
+- digital ocean
+- helm
+- helm push
+- spaces
+meta:
+  _last_editor_used_jetpack: block-editor
+  _oembed_5cb6e3d710bd6df6fa760c91bde1f77d: "{{unknown}}"
+  _oembed_13e4655f7b24b9e1c62217f57045df7b: "{{unknown}}"
+  _publicize_job_id: '66427869501'
+  timeline_notification: '1639324444'
+  _oembed_5d2ec1a3e61426f5549784e0fd6e9964: "{{unknown}}"
+  _oembed_a1651bf284f8503e7d6e71d2e0c46faf: "{{unknown}}"
+  _wp_old_date: '2021-12-08'
+author:
+  login: tanmaybhat24
+  email: tanmaybhat24@gmail.com
+  display_name: Tanmay Bhat
+  first_name: Tanmay
+  last_name: Bhat
+permalink: "/2021/12/12/hosting-the-chartmuseum-in-digital-ocean-space/"
+---
+<p><!-- wp:image {"id":399,"sizeSlug":"large","linkDestination":"none"} --></p>
+<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/12/vlz-1.png?w=500" alt="" class="wp-image-399" /></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>Most DevOps engineers who use Chartmuseum to store/host their helm charts use S3 as their storage medium. Well, I wanted to try Digital Ocean spaces as its S3 compatible storage option.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Well, there's an obvious reason why to use S3 in the first place. Beautiful integration with AWS other services, cheap, easy to access, versioning, MFA delete protection etc.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>However, if you're an early developer / DevOps engineer or in a small startup who doesn't wanna go through 1000 configurations in AWS just to create one single storage bucket in the cloud and again go through 1000 more security hurdles in case you want this bucket to be public, you should use DO Spaces. I'll list down why :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true} --></p>
+<ol>
+<li>Super easy to set up.</li>
+<li>Damn cheap. $5 for 250GB storage.</li>
+<li>One-click public/private button.</li>
+<li>Easy to integrate CDN if you have any.</li>
+</ol>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>That being said, Let's look at how we can utilize Spaces as an AWS S3 replacement to host our helm charts.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:heading --></p>
+<h2 id="create-spaces">Create Spaces :</h2>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Log in to your console and click on Spaces and select <em>Create spaces for $5</em>.</li>
+<li>The name has to be unique and make the <em>permission</em> (<strong>File Listing)</strong> private.</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:image {"id":401,"sizeSlug":"large","linkDestination":"none"} --></p>
+<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/12/d1-1.png?w=1024" alt="" class="wp-image-401" /></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Once done, you should have the endpoint of the spaces created like :</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:image {"id":402,"sizeSlug":"large","linkDestination":"none"} --></p>
+<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/12/d2.png?w=1024" alt="" class="wp-image-402" /></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Once, done, go to API section and create Access keys for Spaces.</li>
+<li>Please note that the <em>secret key</em> will be displayed only once and hence keep it safe copied somewhere.</li>
+<li>With that said, you're ready to move to the next step.</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator" />
+<!-- /wp:separator --></p>
+<p><!-- wp:heading {"level":4} --></p>
+<h4 id="install-chartmuseum">Install Chartmuseum</h4>
+<p><!-- /wp:heading --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Add helm repo :</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>         <code>helm repo add chartmuseum <a rel="noreferrer noopener" href="https://chartmuseum.github.io/charts" target="_blank">https://chartmuseum.github.io/charts</a>   </code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Update the repo :</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>           <code>helm repo update</code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li>Here, we can just run helm install since we need to tell chartmuseum to use Space as a holy place to store charts instead of local PVC ( default).</li>
+<li>Download the chart to your local system by running :</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p><code>helm pull chartmuseum/chartmuseum —untar</code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list --></p>
+<ul>
+<li><span style="background-color:var(--wp--custom--color--background);color:var(--wp--custom--color--foreground);font-family:var(--wp--preset--font-family--body-font);font-size:var(--wp--preset--font-size--normal);">Next, </span><code style="color:var(--wp--custom--color--foreground);font-size:var(--wp--preset--font-size--normal);">cd</code><span style="background-color:var(--wp--custom--color--background);color:var(--wp--custom--color--foreground);font-family:var(--wp--preset--font-family--body-font);font-size:var(--wp--preset--font-size--normal);"> to <em>chartmuseum </em>directory and open </span><code style="color:var(--wp--custom--color--foreground);font-size:var(--wp--preset--font-size--normal);">values.yaml</code><span style="background-color:var(--wp--custom--color--background);color:var(--wp--custom--color--foreground);font-family:var(--wp--preset--font-family--body-font);font-size:var(--wp--preset--font-size--normal);"> in your fav text editor.</span></li>
+<li>Update the fields to look like below :</li>
+</ul>
+<p><!-- /wp:list --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"yaml"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">STORAGE: "amazon"
+STORAGE_AMAZON_BUCKET: &lt;your space name&gt;
+STORAGE_AMAZON_REGION: &lt;region in which your space is created for ex: sgp1 for Singapore&gt;
+STORAGE_AMAZON_ENDPOINT: "https://&lt;REGION&gt;.digitaloceanspaces.com"
+
+#enable API to interact with endpoint 
+DISABLE_API: false
+#secret section
+BASIC_AUTH_USER: admin  
+# password for basic http authentication
+BASIC_AUTH_PASS: secret_password123
+#Spaces access key
+AWS_ACCESS_KEY_ID: "YOUR KEY"
+#spacess secret key
+AWS_SECRET_ACCESS_KEY: "YOUR SECRET KEY"</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>That's it, run the below command to install the chart :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><code>helm install chartmuseum chartmuseum/ -f chartmuseum/values.yaml</code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p> Next, add an entry in ingress to point to your Repository URL. Here is mine ( example) :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:syntaxhighlighter/code {"language":"yaml"} --></p>
+<pre class="wp-block-syntaxhighlighter-code">- host: chartmuseum.tanmaybhat.tk
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: chartmuseum
+                port:
+                  number: 80</pre>
+<p><!-- /wp:syntaxhighlighter/code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Please note that you need to set <em>False </em>to <em>Disable_API</em> else you cant send any data to your endpoint.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>That's it, you can now add your repo to your helm by typing :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><code>helm repo add chartmuseum &lt;chartmuseum.example.com&gt; -u USERNAME -p PASSWORD</code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>If you want to push chart to this repo, you can do that by installing the helm push plugin:</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><code>helm plugin install https://github.com/chartmuseum/helm-push.git --version v0.9.0</code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Once installed, push the chart by running :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p><code>helm push chart_directory chartmuseum</code></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Happy Helming !</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:separator --></p>
+<hr class="wp-block-separator" />
+<!-- /wp:separator --></p>
+<p><!-- wp:paragraph --></p>
+<p>References :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>https://artifacthub.io/packages/helm/chartmuseum/chartmuseum</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>https://chartmuseum.com/</p>
+<p><!-- /wp:paragraph --></p>

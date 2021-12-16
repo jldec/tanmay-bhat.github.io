@@ -1,0 +1,119 @@
+---
+layout: post
+title: Pulling private image from Docker hub in GitLab CI
+date: 2021-08-23 20:20:33.000000000 +00:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- docker
+tags:
+- gitlab-ci
+meta:
+  _last_editor_used_jetpack: block-editor
+  _publicize_job_id: '62186301354'
+  timeline_notification: '1629730235'
+author:
+  login: tanmaybhat24
+  email: tanmaybhat24@gmail.com
+  display_name: Tanmay Bhat
+  first_name: Tanmay
+  last_name: Bhat
+permalink: "/2021/08/23/pulling-private-image-from-docker-hub-in-gitlab-ci/"
+---
+<p><!-- wp:image {"align":"center","id":151,"width":542,"height":406,"sizeSlug":"full","linkDestination":"none"} --></p>
+<div class="wp-block-image">
+<figure class="aligncenter size-full is-resized"><img src="{{ site.baseurl }}/assets/2021/08/pexels-photo-3872479.jpeg" alt="" class="wp-image-151" width="542" height="406" /><br />
+<figcaption>Photo by Louis Podevin on <a href="https://www.pexels.com/photo/bird-s-eye-view-of-seashore-3872479/" rel="nofollow">Pexels.com</a></figcaption>
+</figure>
+</div>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>Hey people ! I'm back this time with a how-to on GitLab CI to make your life easy being DevOps Engineer. I thought of  writing this since I spent hours searching and fixing this :/ </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Lets look at the problem or the requirement. It goes like this :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>"I have a GitLab CI file integrated into my project which builds a Dockerfile and pushes that image into ECR. But the dockerfile has a base image which is from a private Docker hub repository. how do I pull from that repo ?"</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Lets consider the below <code>gitlab-ci.yml</code> file :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:code --></p>
+<pre class="wp-block-code"><code>image: "python:3.6"     
+                    
+stages:                                   
+  - publish_image                         
+
+build and push docker image:        
+  stage: publish_image
+  only:                                   
+    variables:
+        - $CI_COMMIT_TAG =~ /^v&#091;0-9]+\.&#091;0-9]+\.&#091;0-9]+-&#091;0-9]+\.&#091;0-9]+\.&#091;0-9]+$/ 
+        - $CI_COMMIT_TAG =~ /^v&#091;0-9]+\.&#091;0-9]+\.&#091;0-9]+$/     
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+  image: 
+    name: amazon/aws-cli
+    entrypoint: &#091;""]
+  services:
+    - docker:dind 
+  before_script:
+    - echo "$CI_COMMIT_TAG"
+    - amazon-linux-extras install docker
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build -t $DOCKER_REGISTRY/$APP_NAME:$DOCKER_TAG .
+    - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY 
+    - docker push $DOCKER_REGISTRY/$APP_NAME:$CI_COMMIT_TAG
+    - docker push $DOCKER_REGISTRY/$APP_NAME:$DOCKER_TAG</code></pre>
+<p><!-- /wp:code --></p>
+<p><!-- wp:paragraph --></p>
+<p>Link for the above file : <a href="https://gist.github.com/tanmay-bhat/6fa65b9cd9d5f7f5e780dbe3efcb1fb7">Here</a></p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>What the above CI file does :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true} --></p>
+<ol>
+<li>Uses base image <code>python</code> on which the stages will run.</li>
+<li>has a single stage which will build and push images to ECR</li>
+<li><em>only</em> section tells gitlab to run the stage only if the git tag is done and it matched the regex mentioned. </li>
+<li>in <em>before_script</em> section, we're displaying the commit tag and installing docker in aws-cli image since that image doesn't come preinstalled with docker.</li>
+<li>finally we're doing docker login to with our dockerhub account before building Dockerfile.</li>
+<li>Later we build the Dockerfile and then push it to ECR</li>
+</ol>
+<p><!-- /wp:list --></p>
+<p><!-- wp:paragraph --></p>
+<p>Now, lets see <strong>How to login to Docker hub in GitLab CI to pull your private repository images</strong> </p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:list {"ordered":true} --></p>
+<ol>
+<li>To configure the Dockerhub credentials, go to your GitLab <em>project -&gt; settings -&gt; CI/CD</em></li>
+<li>In Variables section, add the below Key and their value :</li>
+</ol>
+<p><!-- /wp:list --></p>
+<p><!-- wp:code --></p>
+<pre class="wp-block-code"><code>Key : CI_REGISTRY ||  Value : docker.io
+Key : CI_REGISTRY_USER ||  Value : &lt;your_dockerhub_username&gt;
+Key : CI_REGISTRY_PASSWORD || Value : &lt;your_dockerhub_password&gt; </code></pre>
+<p><!-- /wp:code --></p>
+<p><!-- wp:image {"id":144,"sizeSlug":"large","linkDestination":"none"} --></p>
+<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/08/image.png?w=1024" alt="" class="wp-image-144" /></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>Now, to configure AWS credentials, configure the below Keys and their values :</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:code --></p>
+<pre class="wp-block-code"><code>Key : AWS_ACCESS_KEY_ID || Value : &lt;your_aws_accesskey&gt;
+Key : AWS_SECRET_ACCESS_KEY || Value : &lt;your_aws_secretkey&gt;</code></pre>
+<p><!-- /wp:code --></p>
+<p><!-- wp:image {"id":147,"sizeSlug":"large","linkDestination":"none"} --></p>
+<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/08/image-1.png?w=1024" alt="" class="wp-image-147" /></figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>That's it.  Voila !! the GitLab runner should pull your docker credentials from variables and pull the image.</p>
+<p><!-- /wp:paragraph --></p>

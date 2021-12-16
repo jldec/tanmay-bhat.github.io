@@ -1,0 +1,67 @@
+---
+layout: post
+title: A tale of EC2 connectivity issue
+date: 2021-12-11 17:58:40.000000000 +00:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories: []
+tags:
+- AWS
+- ec2
+- outage
+- ssh
+- timeout
+- us-east-1
+meta:
+  _last_editor_used_jetpack: block-editor
+  _publicize_job_id: '66384671717'
+  timeline_notification: '1639225722'
+author:
+  login: tanmaybhat24
+  email: tanmaybhat24@gmail.com
+  display_name: Tanmay Bhat
+  first_name: Tanmay
+  last_name: Bhat
+permalink: "/2021/12/11/a-tale-of-ec2-connectivity-issue/"
+---
+<p><!-- wp:image {"id":375,"sizeSlug":"full","linkDestination":"none"} --></p>
+<figure class="wp-block-image size-full"><img src="{{ site.baseurl }}/assets/2021/12/pexels-photo-764880.jpeg" alt="" class="wp-image-375" /><br />
+<figcaption>Photo by Bob  Price on <a href="https://www.pexels.com/photo/man-walking-on-floor-764880/" rel="nofollow">Pexels.com</a></figcaption>
+</figure>
+<p><!-- /wp:image --></p>
+<p><!-- wp:paragraph --></p>
+<p>This happened 3 days ago. I received a message from one of our ML engineers that he can't access the EC2 server in the us-east-1 region. I asked him about the error message and he said ssh is giving a time-out error.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>So, I tried connecting to the server via EC2 connect feature ( web shell) that AWS provides, and even that said connection timed out.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Tried telnet to the endpoint and was the same also.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>I thought maybe the server may be struck due to overload and restarted it. But the state was still the same once it came up. I saw the metrics of the server via Cloudwatch and everything was fine, saw system logs also and even that looked good.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Curiously opened <a href="https://status.aws.amazon.com/"></a><a href="https://status.aws.amazon.com/">https://status.aws.amazon.com/</a> and saw that us-east-1 Region is having an outage.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Being a Reddit fan, opened r/sysadmin and I could see people all over the world complaining about AWS being down in that region and 1000's of memes on AWS. I told myself this could be mostly due to the AWS outage and I'll see once they fix it.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Cut to the next day because the outage took 19 long hours to fix the outage. long live SLA!</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>I was still not able to connect to the instance and it was still same. After digging for X time, turns out the issue was with the subnet in which EC2 was launched. Someone mistakenly attached NAT gateway to the public subnet instead of the internet gateway. Updated the correct config in the Route-table of the subnet and it worked.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>One tiny missing detail can totally mess your mind up.</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p>Another day of learning :D</p>
+<p><!-- /wp:paragraph --></p>
+<p><!-- wp:paragraph --></p>
+<p> Happy devopsing !!!</p>
+<p><!-- /wp:paragraph --></p>
