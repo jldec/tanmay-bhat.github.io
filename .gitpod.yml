@@ -1,6 +1,9 @@
 # Commands to start on workspace startup
 tasks:
-  - init: bundle install
+  - name: jeykyll
+    init: >
+      bundle install &&
+      gp sync-done bundle
     command: bundle exec jekyll serve
 # Ports to expose on workspace startup
 ports:
