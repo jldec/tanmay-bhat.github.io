@@ -13,7 +13,7 @@ Hence we thought how can we use a <b>single loadbalancer</b> across all the name
 
 Here's an example of before migration, how ingress looked like for default namespace:
 
-```
+```yml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -40,7 +40,7 @@ spec:
 
 Lets take a look at ArgoCD  ingress :
 
-```
+```yml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -81,7 +81,7 @@ After hunting for a while, we found that the solution lies in using a ALB annota
 
 Below is an example for 2 different namespaces with single ALB : 
 
-```
+```yml
 #default namespace ingress
 
 apiVersion: networking.k8s.io/v1
@@ -108,7 +108,7 @@ spec:
                   number: 80
 ```
 
-```
+```yml
 #argocd namespace ingerss
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -153,7 +153,7 @@ The solution is to add ```ingressClassName: nginx``` in the ingress object <b>Sp
 
 So the final ingress file looks like this for default namespace:
 
-```
+```yml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -176,7 +176,7 @@ spec:
 ```
 Argocd Ingress namespace ingress looks like this:
 
-```
+```yml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
