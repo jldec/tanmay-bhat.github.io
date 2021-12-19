@@ -53,7 +53,7 @@ permalink: "/2021/10/11/how-to-migrate-all-your-worker-nodes-from-multiple-az-to
 <p>1. Go to your cluster in EKS and then click on <strong>Add Node Group</strong> :</p>
   
 <p><!-- wp:image {"id":191,"sizeSlug":"large","linkDestination":"none"} --></p>
-<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/10/image.png?w=1024" alt="" class="wp-image-191" /></figure>
+<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/10/image.png" alt="" class="wp-image-191" /></figure>
  
   
 <p>2. Go with usual flow of giving it a name, taint if required, and IAM role.</p>
@@ -65,7 +65,7 @@ permalink: "/2021/10/11/how-to-migrate-all-your-worker-nodes-from-multiple-az-to
 <p>4. In Networking section, by default 3 subnets will be selected, untick 2 of them and keep 1 ( any desired AZ 'a/b/c'). If you're unsure about the name and AZ, you can verify that in VPC &gt; subnets.</p>
   
 <p><!-- wp:image {"id":193,"sizeSlug":"large","linkDestination":"none"} --></p>
-<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/10/image-1.png?w=1024" alt="" class="wp-image-193" /></figure>
+<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/10/image-1.png" alt="" class="wp-image-193" /></figure>
  
   
 <p>That's it, create the node group and all the instances will be spawned in that AZ only.</p>
