@@ -3,31 +3,9 @@ layout: post
 title: Configuring TP -Link TL-WR740N as WI-FI repeater
 date: 2021-08-11 00:36:50.000000000 +00:00
 type: post
-
-categories: []
-tags:
-- How to configure TL-WR740N as repeater
-- TL-WR740N repeater
-- tp link repeater
-- wifi repeater
-meta:
-  _publicize_job_id: '61715926173'
-  timeline_notification: '1628622412'
-  _last_editor_used_jetpack: block-editor
-author:
-  login: tanmaybhat24
-  email: tanmaybhat24@gmail.com
-  display_name: Tanmay Bhat
-  first_name: Tanmay
-  last_name: Bhat
 permalink: "/2021/08/11/configuring-tp-link-tl-wr740n-as-wi-fi-repeater/"
----
-<p><!-- wp:image {"align":"center","id":133,"width":302,"height":206,"sizeSlug":"large","linkDestination":"none"} --></p>
-<div class="wp-block-image">
-<figure class="aligncenter size-large is-resized"><img src="{{ site.baseurl }}/assets/2021/08/wireless-signal-1119306_1280.png" alt="" class="wp-image-133" width="302" height="206" /></figure>
-</div>
- 
-  
+background: /img/posts/router.jpg
+---  
 <p>Hey people, in this article, we'll see how to configure TP -Link <a href="https://www.tp-link.com/in/home-networking/wifi-router/tl-wr740n/">TL-WR740N</a> (preferably old one) as repeater to extend your main WI-FI signal in your house.</p>
   
   

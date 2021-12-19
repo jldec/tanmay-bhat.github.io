@@ -3,35 +3,13 @@ layout: post
 title: How to access AWS EKS cluster when you mess up the aws-auth configmap
 date: 2021-09-01 11:34:29.000000000 +00:00
 type: post
-
-categories: []
-tags:
-- aws-auth issue
-meta:
-  _last_editor_used_jetpack: block-editor
-  _publicize_job_id: '62508517687'
-  timeline_notification: '1630476270'
-author:
-  login: tanmaybhat24
-  email: tanmaybhat24@gmail.com
-  display_name: Tanmay Bhat
-  first_name: Tanmay
-  last_name: Bhat
 permalink: "/2021/09/01/how-to-access-aws-eks-cluster-when-you-mess-up-the-aws-auth-configmap/"
+background: /img/posts/aws-mess.jpg
 ---
-<p><!-- wp:image {"align":"center","id":158,"width":432,"height":287,"sizeSlug":"full","linkDestination":"none"} --></p>
-<div class="wp-block-image">
-<figure class="aligncenter size-full is-resized"><img src="{{ site.baseurl }}/assets/2021/09/pexels-photo-2114014.jpeg" alt="" class="wp-image-158" width="432" height="287" /><br />
-<figcaption>Photo by Magda Ehlers on <a href="https://www.pexels.com/photo/white-clouds-2114014/" rel="nofollow">Pexels.com</a></figcaption>
-</figure>
-</div>
- 
   
 <p>Hey people, this is not a complete solution article, but rather a cut story and a probable solution for the below problem statement when it comes to locked out issue in EKS cluster:</p>
   
-<p><!-- wp:verse --></p>
-<pre class="wp-block-verse">'I wanted to add a user to my EKS, hence while adding the user to <code>aws-auth configmap</code> of my EKS cluster, I made some syntax mistakes and now neither I nor anyone can login to EKS cluster" whole cluster is gone, help me please !!! </pre>
-<p><!-- /wp:verse --></p>
+> I wanted to add a user to my EKS, hence while adding the user to <code>aws-auth configmap</code> of my EKS cluster, I made some syntax mistakes and now neither I nor anyone can login to EKS cluster" whole cluster is gone, help me please !!!
   
 <p><span style="text-decoration:underline;">Straight forward solution which I found out :</span></p>
   
@@ -55,7 +33,7 @@ permalink: "/2021/09/01/how-to-access-aws-eks-cluster-when-you-mess-up-the-aws-a
   
 <p><!-- wp:separator --></p>
 <hr class="wp-block-separator" />
-<!-- /wp:separator --></p>
+<!-- /wp:separator -->
   
 <p><strong>Long term solution :</strong></p>
   
@@ -81,10 +59,6 @@ permalink: "/2021/09/01/how-to-access-aws-eks-cluster-when-you-mess-up-the-aws-a
   
   
 <p><code>kubectl apply -n kube-system -f <code>aws-auth-configmap.yml</code> </code></p>
-  
-<p><!-- wp:separator --></p>
-<hr class="wp-block-separator" />
-<!-- /wp:separator --></p>
   
 <p><strong>Remember</strong>, live editing is never a good option !!!</p>
   

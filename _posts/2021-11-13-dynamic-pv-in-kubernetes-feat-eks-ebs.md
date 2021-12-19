@@ -3,36 +3,13 @@ layout: post
 title: Dynamic PV in Kubernetes feat. EKS (EBS)
 date: 2021-11-13 20:13:38.000000000 +00:00
 type: post
-
-categories: []
-tags:
-- aws eks
-- kubernetes
-- pv
-- pvc
-meta:
-  _last_editor_used_jetpack: block-editor
-  _oembed_d090f9762f9a22dcd22508010f08488b: "{{unknown}}"
-  _publicize_job_id: '65310489028'
-  timeline_notification: '1636814620'
-author:
-  login: tanmaybhat24
-  email: tanmaybhat24@gmail.com
-  display_name: Tanmay Bhat
-  first_name: Tanmay
-  last_name: Bhat
 permalink: "/2021/11/13/dynamic-pv-in-kubernetes-feat-eks-ebs/"
+background: /img/posts/aws-skeleton.png
 ---
-<p><!-- wp:image {"align":"center","width":347,"height":399,"sizeSlug":"large"} --></p>
-<div class="wp-block-image">
-<figure class="aligncenter size-large is-resized"><img src="{{ site.baseurl }}/assets/2021/11/88_amazon-eks-icon.e573f9f8d7.svg" alt="" width="347" height="399" /></figure>
-</div>
- 
-  
 <p>This article doesn't explain what are PV and PVC's in Kubernetes. For that you can refer the official Docs.</p>
   
   
-<p>What does volume resizing mean ( for PV in Kubernetes)  ? </p>
+<p>Initial question would be, what does volume resizing mean ( for PV in Kubernetes)  ? </p>
   
   
 <p>Its the ability to increase the PV size ( EBS volume behind the scene ).</p>

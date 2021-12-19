@@ -3,28 +3,8 @@ layout: post
 title: Monitoring K8S resource changes with kubewatch
 date: 2021-10-15 21:01:04.000000000 +00:00
 type: post
-
-categories: []
-tags:
-- helm
-- kubernetes monitoring
-- kubewatch
-meta:
-  _last_editor_used_jetpack: block-editor
-  timeline_notification: '1634311866'
-  _publicize_job_id: '64187451503'
-author:
-  login: tanmaybhat24
-  email: tanmaybhat24@gmail.com
-  display_name: Tanmay Bhat
-  first_name: Tanmay
-  last_name: Bhat
-permalink: "/2021/10/15/monitoring-k8s-resource-changes-cluster-with-kubewatch/"
+background: /img/k8s-bg.png
 ---
-<p><!-- wp:image {"sizeSlug":"large"} --></p>
-<figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/10/kubewatch-logo.jpeg" alt="" /></figure>
- 
-  
 <p>But what's kubewatch ?</p>
   
   
@@ -48,17 +28,17 @@ permalink: "/2021/10/15/monitoring-k8s-resource-changes-cluster-with-kubewatch/"
 <li>Add Bitnami repo to your helm :</li>
 </ol>
  
-<p><!-- wp:preformatted --></p>
-<pre class="wp-block-preformatted">helm repo add bitnami https://charts.bitnami.com/bitnami</pre>
-<p><!-- /wp:preformatted --></p>
+```sh
+helm repo add bitnami https://charts.bitnami.com/bitnami
+```
   
 <p> 2. Verify that kubewatch chart is available in the repo :</p>
   
-<p><!-- wp:code --></p>
-<pre class="wp-block-code"><code>demo&gt; helm search repo kubewatch
+```console
+demo> helm search repo kubewatch
 NAME                    CHART VERSION   APP VERSION     DESCRIPTION
 bitnami/kubewatch       3.2.16          0.1.0           Kubewatch </code></pre>
-<p><!-- /wp:code --></p>
+```
   
 <p>3. Customize the values like slack integration and enabling RBAC. If you directly do <em>helm install chart-name </em>you wont get any event notification as RBAC is set to <em>false </em>by default. </p>
   
@@ -70,42 +50,41 @@ bitnami/kubewatch       3.2.16          0.1.0           Kubewatch </code></pre>
   
   
 <p><strong>Slack Integration :</strong></p>
-  
-<p><!-- wp:code --></p>
-<pre class="wp-block-code"><code>slack:
+
+```sh  
+slack:
 enabled: true
 channel: "kubewatch"           #your slack channel name
 ## Create using: https://my.slack.com/services/new/bot and invite the bot to your channel using: /join @botname
 ##
-token: "your slack bot token here"</code></pre>
-<p><!-- /wp:code --></p>
+token: "your slack bot token here"
+```
   
 <p><strong>RBAC </strong>:</p>
-  
-<p><!-- wp:code --></p>
-<pre class="wp-block-code"><code>## @section RBAC parameters
 
+```yml
+## @section RBAC parameters
 ## @param rbac.create Whether to create &amp; use RBAC resources or not
 ##
 rbac:
-  create: true</code></pre>
-<p><!-- /wp:code --></p>
-  
+  create: true
+```
+
 <p>3. Now lets deploy using the below command :</p>
-  
-<p><!-- wp:code --></p>
-<pre class="wp-block-code"><code>demo&gt; helm install kubewatch bitnami/kubewatch -f .\updated-values.yaml</code></pre>
-<p><!-- /wp:code --></p>
+
+```sh
+ helm install kubewatch bitnami/kubewatch -f .\updated-values.yaml
+```
   
 <p>4. Verify that kubewatch pod is running :</p>
   
-<p><!-- wp:code --></p>
-<pre class="wp-block-code"><code>demo&gt; kubectl get pod
+```console
+demo> kubectl get pod
   
 NAME       READY STATUS RESTARTS AGE
-kubewatch-c86656645-8znwk 1/1 Running 0 2m19s</code></pre>
-<p><!-- /wp:code --></p>
-  
+kubewatch-c86656645-8znwk 1/1 Running 0 2m19s
+```
+
 <p>5. To test it out, lets create a nginx deployment with command :</p>
   
   

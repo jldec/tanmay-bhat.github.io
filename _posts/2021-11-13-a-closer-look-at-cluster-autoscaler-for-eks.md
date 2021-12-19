@@ -3,32 +3,9 @@ layout: post
 title: A closer look at Cluster Autoscaler for EKS
 date: 2021-11-13 21:40:26.000000000 +00:00
 type: post
-
-categories: []
-tags:
-- AWS
-- aws eks
-- cluster autoscaler
-- EKS
-- EKS CA
-meta:
-  _last_editor_used_jetpack: block-editor
-  _publicize_job_id: '65313138777'
-  timeline_notification: '1636819828'
-author:
-  login: tanmaybhat24
-  email: tanmaybhat24@gmail.com
-  display_name: Tanmay Bhat
-  first_name: Tanmay
-  last_name: Bhat
+background: /img/posts/eks-2.png
 permalink: "/2021/11/13/a-closer-look-at-cluster-autoscaler-for-eks/"
----
-<p><!-- wp:image {"align":"center","width":587,"height":230,"sizeSlug":"large"} --></p>
-<div class="wp-block-image">
-<figure class="aligncenter size-large is-resized"><img src="{{ site.baseurl }}/assets/2021/11/87_amazon-eks.4a2c5ad771.svg" alt="" width="587" height="230" /></figure>
-</div>
- 
-  
+---  
 <p>If you're wondering why do I write about AWS that much, that's because AWS is the cloud on which I spend most of my work hours in <a href="https://skit.ai">Skit.ai</a> as a DevOps Engineer.</p>
   
   

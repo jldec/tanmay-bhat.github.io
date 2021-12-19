@@ -3,32 +3,7 @@ layout: post
 title: How to claim free Azure certification  vouchers after attending Microsoft Events
 date: 2021-04-26 11:26:06.000000000 +00:00
 type: post
-
-categories: []
-tags:
-- azure
-- claim azure voucher
-- free voucher
-meta:
-  _last_editor_used_jetpack: block-editor
-  _thumbnail_id: '93'
-  _wpas_done_25816526: '1'
-  _publicize_job_id: '57611564852'
-  _publicize_done_external: a:1:{s:7:"twitter";a:1:{i:25816526;s:59:"https://twitter.com/Tanmaybhat98/status/1386559703254110209";}}
-  timeline_notification: '1619416569'
-  _publicize_done_23503769: '1'
-  publicize_twitter_user: Tanmaybhat98
-  _oembed_d364bdd217fd91ef054d53bf1e96d235: <div class="embed-reddit">    <blockquote
-    class="reddit-card" >      <a href="https://www.reddit.com/r/bsnl/comments/ht37q4/guide_for_bsnl_ftth/?ref_source=embed&amp;ref=share">[Guide]
-    For BSNL FTTH</a> from      <a href="https://www.reddit.com/r/bsnl/">bsnl</a>    </blockquote>    <script
-    async src="https://embed.redditmedia.com/widgets/platform.js" charset="UTF-8"></script></div>
-  _oembed_time_d364bdd217fd91ef054d53bf1e96d235: '1619527556'
-author:
-  login: tanmaybhat24
-  email: tanmaybhat24@gmail.com
-  display_name: Tanmay Bhat
-  first_name: Tanmay
-  last_name: Bhat
+background: /img/posts/azure.jpg
 permalink: "/2021/04/26/how-to-claim-free-azure-certification-vouchers-after-attending-microsoft-events/"
 ---
   
@@ -57,9 +32,4 @@ permalink: "/2021/04/26/how-to-claim-free-azure-certification-vouchers-after-att
  
   
 <p>Then you can schedule the exam at your day of choice from home and get certified.</p>
-  
-  
-<p><strong>Source </strong>: https://trainingsupport.microsoft.com/en-us/mcp/forum/mcp_other/azure-fundamentals-certification-exam-at-no-cost/44a80497-a18e-4ecd-bf3a-5459775baf11</p>
-  
-  
-  
+

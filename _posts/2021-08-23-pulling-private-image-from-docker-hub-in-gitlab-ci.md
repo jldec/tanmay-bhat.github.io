@@ -3,44 +3,20 @@ layout: post
 title: Pulling private image from Docker hub in GitLab CI
 date: 2021-08-23 20:20:33.000000000 +00:00
 type: post
-
-categories:
-- docker
-tags:
-- gitlab-ci
-meta:
-  _last_editor_used_jetpack: block-editor
-  _publicize_job_id: '62186301354'
-  timeline_notification: '1629730235'
-author:
-  login: tanmaybhat24
-  email: tanmaybhat24@gmail.com
-  display_name: Tanmay Bhat
-  first_name: Tanmay
-  last_name: Bhat
-permalink: "/2021/08/23/pulling-private-image-from-docker-hub-in-gitlab-ci/"
----
-<p><!-- wp:image {"align":"center","id":151,"width":542,"height":406,"sizeSlug":"full","linkDestination":"none"} --></p>
-<div class="wp-block-image">
-<figure class="aligncenter size-full is-resized"><img src="{{ site.baseurl }}/assets/2021/08/pexels-photo-3872479.jpeg" alt="" class="wp-image-151" width="542" height="406" /><br />
-<figcaption>Photo by Louis Podevin on <a href="https://www.pexels.com/photo/bird-s-eye-view-of-seashore-3872479/" rel="nofollow">Pexels.com</a></figcaption>
-</figure>
-</div>
- 
-  
+background: /img/posts/gitlab.png
+---  
 <p>Hey people ! I'm back this time with a how-to on GitLab CI to make your life easy being DevOps Engineer. I thought of  writing this since I spent hours searching and fixing this :/ </p>
   
   
 <p>Lets look at the problem or the requirement. It goes like this :</p>
   
   
-<p>"I have a GitLab CI file integrated into my project which builds a Dockerfile and pushes that image into ECR. But the dockerfile has a base image which is from a private Docker hub repository. how do I pull from that repo ?"</p>
+> I have a GitLab CI file integrated into my project which builds a Dockerfile and pushes that image into ECR. But the dockerfile has a base image which is from a private Docker hub repository. how do I pull from that repo ?
   
   
 <p>Lets consider the below <code>gitlab-ci.yml</code> file :</p>
-  
-<p><!-- wp:code --></p>
-<pre class="wp-block-code"><code>image: "python:3.6"     
+```yml  
+image: "python:3.6"     
                     
 stages:                                   
   - publish_image                         
@@ -55,7 +31,7 @@ build and push docker image:
     DOCKER_HOST: tcp://docker:2375
   image: 
     name: amazon/aws-cli
-    entrypoint: &#091;""]
+    entrypoint: ""
   services:
     - docker:dind 
   before_script:
@@ -66,8 +42,8 @@ build and push docker image:
     - docker build -t $DOCKER_REGISTRY/$APP_NAME:$DOCKER_TAG .
     - aws ecr get-login-password | docker login --username AWS --password-stdin $DOCKER_REGISTRY 
     - docker push $DOCKER_REGISTRY/$APP_NAME:$CI_COMMIT_TAG
-    - docker push $DOCKER_REGISTRY/$APP_NAME:$DOCKER_TAG</code></pre>
-<p><!-- /wp:code --></p>
+    - docker push $DOCKER_REGISTRY/$APP_NAME:$DOCKER_TAG
+```
   
 <p>Link for the above file : <a href="https://gist.github.com/tanmay-bhat/6fa65b9cd9d5f7f5e780dbe3efcb1fb7">Here</a></p>
   
@@ -93,21 +69,22 @@ build and push docker image:
 <li>In Variables section, add the below Key and their value :</li>
 </ol>
  
-<p><!-- wp:code --></p>
-<pre class="wp-block-code"><code>Key : CI_REGISTRY ||  Value : docker.io
-Key : CI_REGISTRY_USER ||  Value : &lt;your_dockerhub_username&gt;
-Key : CI_REGISTRY_PASSWORD || Value : &lt;your_dockerhub_password&gt; </code></pre>
-<p><!-- /wp:code --></p>
+```sh
+Key : CI_REGISTRY ||  Value : docker.io
+Key : CI_REGISTRY_USER ||  Value : your_dockerhub_username
+Key : CI_REGISTRY_PASSWORD || Value : your_dockerhub_password
+```
+
 <p><!-- wp:image {"id":144,"sizeSlug":"large","linkDestination":"none"} --></p>
 <figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/08/image.png" alt="" class="wp-image-144" /></figure>
- 
+
   
-<p>Now, to configure AWS credentials, configure the below Keys and their values :</p>
+<p>Now, to setup AWS credentials, configure the below values :</p>
   
-<p><!-- wp:code --></p>
-<pre class="wp-block-code"><code>Key : AWS_ACCESS_KEY_ID || Value : &lt;your_aws_accesskey&gt;
-Key : AWS_SECRET_ACCESS_KEY || Value : &lt;your_aws_secretkey&gt;</code></pre>
-<p><!-- /wp:code --></p>
+```sh
+Key : AWS_ACCESS_KEY_ID || Value : your_aws_accesskey
+Key : AWS_SECRET_ACCESS_KEY || Value : your_aws_secretkey
+```
 <p><!-- wp:image {"id":147,"sizeSlug":"large","linkDestination":"none"} --></p>
 <figure class="wp-block-image size-large"><img src="{{ site.baseurl }}/assets/2021/08/image-1.png" alt="" class="wp-image-147" /></figure>
  

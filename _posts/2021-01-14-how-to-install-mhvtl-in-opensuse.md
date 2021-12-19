@@ -18,23 +18,30 @@ background: '/img/posts/opensuse.jpg'
 <p>lets get started :</p>
 <p>1.First update the packages to latest version available by typing :</p>
 
-<pre class="wp-block-preformatted"><kbd>sudo zypper up</kbd></pre>
+<code> sudo zypper up </code>
+
 <p>2. Once the packages are up to date, install the below supporting packages :</p>
-<p><kbd>sudo zypper install gcc gcc-c++ kernel-devel zlib-devel mt-st mtx lzo-devel perl</kbd></p>
+<code>sudo zypper install gcc gcc-c++ kernel-devel zlib-devel mt-st mtx lzo-devel perl</code>
 <p>3. Now add the repository and install the package :</p>
-<pre class="wp-block-code"><code>zypper addrepo https://download.opensuse.org/repositories/openSUSE:Leap:15.2:Update/standard/openSUSE:Leap:15.2:Update.repo
+```sh
+zypper addrepo https://download.opensuse.org/repositories/openSUSE:Leap:15.2:Update/standard/openSUSE:Leap:15.2:Update.repo
 zypper refresh
-zypper install mhvtl</code></pre>
+zypper install mhVTL
+```
 <p>4. start the mhvtl service ;</p>
 <p><code>service mhvtl start </code></p>
 <p>5. check if mhvtl service is running :</p>
 <p><code>service mhvtl status</code></p>
-<pre class="wp-block-code"><code>test-machine:/home/azureuser # service mhvtl status
+```console
+test-machine:/home/azureuser # service mhvtl status
 ● mhvtl.target - mhvtl service allowing to start/stop all vtltape@.service and vtllibrary@.service instances at once
    Loaded: loaded (/usr/lib/systemd/system/mhvtl.target; disabled; vendor preset: disabled)
-   Active: active since Thu 2021-01-14 17:13:36 UTC; 50min ago</code></pre>
+   Active: active since Thu 2021-01-14 17:13:36 UTC; 50min ago
+```   
+
 <p>6. verify if you are able to see the tape library and the drives configured( by default) :</p>
-<pre class="wp-block-syntaxhighlighter-code">&lt;code&gt;test-machine:/home/azureuser # lsscsi -g
+```console
+test-machine:/home/azureuser # lsscsi -g
 [1:0:0:0]    cd/dvd  Msft     Virtual CD/ROM   1.0   /dev/sr0   /dev/sg3 
 [2:0:0:0]    disk    Msft     Virtual Disk     1.0   /dev/sda   /dev/sg0 
 [3:0:1:0]    disk    Msft     Virtual Disk     1.0   /dev/sdb   /dev/sg1 
@@ -48,6 +55,7 @@ zypper install mhvtl</code></pre>
 [6:0:9:0]    tape    STK      T10000B          0162  /dev/st2   /dev/sg6 
 [6:0:10:0]   tape    STK      T10000B          0162  /dev/st5   /dev/sg9 
 [6:0:11:0]   tape    STK      T10000B          0162  /dev/st1   /dev/sg5 
-[6:0:12:0]   tape    STK      T10000B          0162  /dev/st6   /dev/sg10&lt;/code&gt;</pre>
+[6:0:12:0]   tape    STK      T10000B          0162  /dev/st6   /dev/sg10
+```
 <p>For more details about mhvtl, please refer the below link :</p>
 <p><a href="https://sites.google.com/site/linuxvtl2/">https://sites.google.com/site/linuxvtl2/</a></p>

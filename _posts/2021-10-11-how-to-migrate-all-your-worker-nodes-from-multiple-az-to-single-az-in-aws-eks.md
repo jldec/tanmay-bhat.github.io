@@ -1,29 +1,11 @@
 ---
 layout: post
-title: How to migrate Node-Group from multi AZ to single AZ in AWS EKS
+title: How to migrate a Node-Group from Multi AZ to single AZ in AWS EKS
 date: 2021-10-11 12:46:58.000000000 +00:00
 type: post
-
-categories: []
-tags:
-- aws eks
-meta:
-  _last_editor_used_jetpack: block-editor
-  _publicize_job_id: '64017770157'
-  timeline_notification: '1633936619'
-author:
-  login: tanmaybhat24
-  email: tanmaybhat24@gmail.com
-  display_name: Tanmay Bhat
-  first_name: Tanmay
-  last_name: Bhat
+background: /img/posts/eks-2.png
 permalink: "/2021/10/11/how-to-migrate-all-your-worker-nodes-from-multiple-az-to-single-az-in-aws-eks/"
 ---
-<p><!-- wp:image {"align":"center","width":394,"height":221,"sizeSlug":"large"} --></p>
-<div class="wp-block-image">
-<figure class="aligncenter size-large is-resized"><img src="{{ site.baseurl }}/assets/2021/10/images?q=tbn:ANd9GcTa0qub2i0kok0dp1G2VgrnwqV6YeMRqwy2vA&amp;usqp=CAU" alt="" width="394" height="221" /></figure>
-</div>
- 
   
 <p>After reading the above title you maybe thinking why though? moving the complete worker node fleet into single Availability Zone (AZ) is not a good solution when it comes to high availability of your Kubernetes cluster workload.</p>
   
@@ -34,7 +16,8 @@ permalink: "/2021/10/11/how-to-migrate-all-your-worker-nodes-from-multiple-az-to
 <p>When you create a EKS cluster, it'll have 3 subnets each correcting to a single AZ i.e 3 AZ in a region. Now for staging / testing clusters the Inter Availability Zone data transfer fees we were getting was a hefty one, which was unnecessary as HA is not needed for the testing environment.</p>
   
   
-<p>I couldn't find this anywhere else, so with an outage at staging cluster :D ( shhhhh!) I found out that the solution is to create a new node group with AZ mentioned while creating works and any node you spawn in that node group using ASG (Auto Scaling Group) will be in that single AZ only keeping your inter AZ data transfer cost to 0. </p>
+<p>I couldn't find this anywhere else, so with an outage at staging cluster :D ( shhhhh!) </p>  
+<p>I found out that the solution is to create a new node group with AZ hard-coded while creating it and any node you spawn in that node group using ASG (Auto Scaling Group) will be in that single AZ only keeping your inter AZ data transfer cost to 0. </p>
   
 <p><!-- wp:code --></p>
 <pre class="wp-block-code"><code><code>eksctl create nodegroup --cluster=staging_cluster  \
@@ -71,7 +54,11 @@ permalink: "/2021/10/11/how-to-migrate-all-your-worker-nodes-from-multiple-az-to
 <p>That's it, create the node group and all the instances will be spawned in that AZ only.</p>
   
   
-<p> You can also do this in a hackish way by editing the ASG(Auto Scaling Group) corresponding to the node group and removing 2 subnets from there, it works but your node group will become <em>Unhealthy</em> and AWS wont do anything to the node groups which is having health issue. So better to create a new node group.</p>
+<p> You can also do this in a hackish way by editing the ASG corresponding to the node group and removing 2 subnets from there.
+</p>
+
+<p>It works but your node group will become Unhealthy and AWS wont do anything to the node groups which is having health issue.
+So better to create a new node group.</p>
   
   
 <p>There's one more way which I found out i.e to use ekctl command line and create from config file.</p>
@@ -81,9 +68,9 @@ permalink: "/2021/10/11/how-to-migrate-all-your-worker-nodes-from-multiple-az-to
   
   
 <p>If you're going with config file, it should look like below : <code>ap-south-la-NG.yaml</code> :</p>
-  
-<p><!-- wp:code --></p>
-<pre class="wp-block-code"><code>apiVersion: eksctl.io/v1alpha5
+
+<pre class="wp-block-code"><code>
+  apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 metadata:
   name: Your_Cluster_Name
