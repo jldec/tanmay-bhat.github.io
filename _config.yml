@@ -12,7 +12,7 @@ github_username: tanmay-bhat
 #instagram_username: dont-click-this-again
 linkedin_username: tanmay-bhat-024
 # Add your google-analytics ID here to activate google analytics
-google_analytics: "UA-135514481-1" # out your google-analytics code
+google_analytics: "" # out your google-analytics code
 
 # Build settings
 markdown:           kramdown
