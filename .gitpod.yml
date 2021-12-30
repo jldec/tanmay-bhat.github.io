@@ -1,11 +1,11 @@
-# Commands to start on workspace startup
+
+# init task == prebuild, command task == run on workspace startup
+# .bundle/config sets bundle path to .gems (gitignored) so that prebuild is saved locally 
 tasks:
-  - name: jeykyll
-    init: echo " starting bundle install"
-    command: bundle install 
-  - name: jeykyll serve
-    init: echo "starting server"
+  - name: jekyll
+    init: bundle install 
     command: bundle exec jekyll serve    
+
 # Ports to expose on workspace startup
 ports:
   - port: 4000
